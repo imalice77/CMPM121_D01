@@ -79,6 +79,30 @@ export const upgrades: Upgrade[] = [
     unlock: 5000,
     kind: "resource",
   },
+  {
+    id: "mentor",
+    name: "Peer Mentor",
+    cost: 4500,
+    effect: 25,
+    unlock: 12000,
+    kind: "resource",
+  },
+  {
+    id: "lab",
+    name: "Research Lab",
+    cost: 11000,
+    effect: 70,
+    unlock: 25000,
+    kind: "resource",
+  },
+  {
+    id: "network",
+    name: "Academic Network",
+    cost: 24000,
+    effect: 180,
+    unlock: 50000,
+    kind: "resource",
+  },
 ];
 export const stages = [
   { name: "Elementary School", at: 0 },
