@@ -19,3 +19,6 @@ Additional imagegen adaptations preserve one brown-haired female protagonist acr
 
 Typing and idle-face atlases
 The typing atlas replaces each notebook activity with a central laptop and matching hands, preserving the protagonist and stage backgrounds. The idle-face atlas supplies eyes-closed relaxed expressions for time-based face animation. Both were created with imagegen as adaptations of the life-stage atlas and retain the CC BY-SA 4.0 attribution and license above.
+
+Wide room and companion atlases
+The wide-writing, wide-typing, and wide-companions atlases extend the life-stage scenes with larger desks, matching open/closed-eye frames, laptop activity, and companions integrated into the room perspective. The mentor is a male character with glasses and a beard. These imagegen adaptations retain the CC BY-SA 4.0 attribution and license above.

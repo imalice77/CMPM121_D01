@@ -3,11 +3,11 @@ import { stages, upgrades } from "./content.ts";
 const game = new Game();
 const app = document.querySelector<HTMLElement>("#app")!;
 const items = new URL("./assets/desk-items.png", import.meta.url).href;
-const scenes = new URL("./assets/girl-life-scenes.png", import.meta.url).href;
+const scenes = new URL("./assets/wide-writing.png", import.meta.url).href;
 const props = new URL("./assets/perspective-props.png", import.meta.url).href;
-const typingScenes =
-  new URL("./assets/girl-typing-scenes.png", import.meta.url).href;
-const idleFaces = new URL("./assets/girl-idle-faces.png", import.meta.url).href;
+const typingScenes = new URL("./assets/wide-typing.png", import.meta.url).href;
+const companionScenes =
+  new URL("./assets/wide-companions.png", import.meta.url).href;
 const format = (n: number) =>
   n.toLocaleString("en-US", { maximumFractionDigits: 1 });
 const icons: Record<string, number> = {
@@ -32,7 +32,7 @@ function item(id: string, extra = ""): string {
   }% ${Math.floor(i / 4) / 2 * 100}%"></span>`;
 }
 app.innerHTML =
-  `<div class="notebook"><header><h1>ASSIGNMENT GRIND</h1><span class="page-number">01 / ∞</span></header><div class="game-layout"><section class="player"><div class="wallet"><span class="coin" aria-hidden="true">✦</span><div><small>CREDITS</small><strong id="balance"></strong></div><span id="rate" title="Automatic homework per second"></span></div><div id="scene" class="scene" style="--scene-art:url('${scenes}')" role="img" aria-label="Brown-haired ponytail girl writing homework"><div id="stage-frame" class="stage-frame" style="--scene-art:url('${scenes}')"><div class="stage-art"></div><div id="companions"></div><div class="foreground-occluder"></div><div id="equipment"></div><div id="writing-hand" class="hand-overlay"></div><div id="held-tool"></div><div class="idle-face" style="background-image:url('${idleFaces}')"></div><span id="spark" aria-hidden="true"></span></div><div id="level-banner" class="level-banner" role="status"></div></div><button id="homework" class="write-button" aria-label="Do homework"><span id="action-label">✎ WRITE!</span><span id="click-effect"></span></button><div class="journey"><div><span id="stage"></span><strong id="percent"></strong></div><progress id="progress" max="1" aria-label="Education stage progress"></progress></div><p id="notice" class="sr-only" role="status" aria-live="polite"></p></section><section class="shops" aria-label="Upgrade shops"><div class="house pen-house"><div class="roof"><span>✎</span></div><div class="facade"><div id="tools" class="tools" aria-label="Writing tools"></div><div class="house-base"><i></i><span>✎</span><i></i></div></div></div><div class="house study-house"><div class="flat-roof"><span>▤</span><i></i><i></i></div><div class="facade"><div id="resources" class="resources" aria-label="Learning resources"></div><div class="house-base"><i></i><span>▣</span><i></i></div></div></div></section></div><footer><span>SPACE / ENTER</span><details><summary>ⓘ</summary><div>Progress lasts for this session. Hover or focus a shop item for details.<p>Pixel art adapted with OpenAI imagegen from OpenMoji references. <a href="https://openmoji.org/">OpenMoji contributors</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p></div></details></footer></div>`;
+  `<div class="notebook"><header><h1>ASSIGNMENT GRIND</h1><span class="page-number">01 / ∞</span></header><div class="game-layout"><section class="player"><div class="wallet"><span class="coin" aria-hidden="true">✦</span><div><small>CREDITS</small><strong id="balance"></strong></div><span id="rate" title="Automatic homework per second"></span></div><div id="scene" class="scene" style="--scene-art:url('${scenes}')" role="img" aria-label="Brown-haired ponytail girl writing homework"><div id="stage-frame" class="stage-frame" style="--scene-art:url('${scenes}');--companions-art:url('${companionScenes}')"><div class="stage-art"></div><div id="companions"></div><div class="foreground-occluder"></div><div class="desk-occluder"></div><div id="equipment"></div><div id="writing-hand" class="hand-overlay"></div><div id="held-tool"></div><div id="companion-counts"></div><span id="spark" aria-hidden="true"></span></div><div id="level-banner" class="level-banner" role="status"></div></div><button id="homework" class="write-button" aria-label="Do homework"><span id="action-label">✎ WRITE!</span><span id="click-effect"></span></button><div class="journey"><div><span id="stage"></span><strong id="percent"></strong></div><progress id="progress" max="1" aria-label="Education stage progress"></progress></div><p id="notice" class="sr-only" role="status" aria-live="polite"></p></section><section class="shops" aria-label="Upgrade shops"><div class="house pen-house"><div class="roof"><span>✎</span></div><div class="facade"><div id="tools" class="tools" aria-label="Writing tools"></div><div class="house-base"><i></i><span>✎</span><i></i></div></div></div><div class="house study-house"><div class="flat-roof"><span>▤</span><i></i><i></i></div><div class="facade"><div id="resources" class="resources" aria-label="Learning resources"></div><div class="house-base"><i></i><span>▣</span><i></i></div></div></div></section></div><footer><span>SPACE / ENTER</span><details><summary>ⓘ</summary><div>Progress lasts for this session. Hover or focus a shop item for details.<p>Pixel art adapted with OpenAI imagegen from OpenMoji references. <a href="https://openmoji.org/">OpenMoji contributors</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p></div></details></footer></div>`;
 const element = (id: string) => document.getElementById(id)!;
 function setText(id: string, value: string): void {
   const el = element(id);
@@ -84,7 +84,18 @@ function decorateRoom(): void {
       game.owned[u.id] > 1 ? `×${game.owned[u.id]}` : ""
     }</span></div>`;
   element("companions").innerHTML = owned.filter((u) => companions.has(u.id))
-    .map(markup).join("");
+    .map((u) =>
+      `<div class="native-companion companion-${u.id}" role="img" aria-label="${u.name}, ${
+        game.owned[u.id]
+      } owned, standing behind the desk"></div>`
+    ).join("");
+  element("companion-counts").innerHTML = owned.filter((u) =>
+    companions.has(u.id)
+  ).map((u) =>
+    `<span class="companion-count count-${u.id}" aria-label="${u.name}: ${
+      game.owned[u.id]
+    } owned">×${game.owned[u.id]}</span>`
+  ).join("");
   element("equipment").innerHTML = owned.filter((u) =>
     !companions.has(u.id) && u.id !== "search"
   ).map(markup).join("");
@@ -142,6 +153,58 @@ function celebrateStage(): void {
     1600,
   );
 }
+const rowBounds = [
+  0,
+  197 / 1774,
+  389 / 1774,
+  583 / 1774,
+  797 / 1774,
+  1022 / 1774,
+  1262 / 1774,
+  1508 / 1774,
+  1,
+];
+const grips = [
+  [44.2, 83.7],
+  [46.2, 84.1],
+  [46.9, 79.5],
+  [45.9, 76.8],
+  [46.8, 83.2],
+  [45.1, 81.2],
+  [45.4, 75.9],
+  [45.5, 66.3],
+];
+const typingGrips = [
+  [64, 74.7],
+  [59.6, 83.1],
+  [59.6, 80],
+  [62.1, 77.6],
+  [62.3, 82.7],
+  [62.6, 81.4],
+  [62.1, 75.3],
+  [62.8, 65.3],
+];
+function setSceneFrame(blink: boolean): void {
+  element("scene").style.setProperty(
+    "--type-x",
+    `${typingGrips[game.stage][0]}%`,
+  );
+  element("scene").style.setProperty(
+    "--type-y",
+    `${typingGrips[game.stage][1]}%`,
+  );
+  element("scene").style.setProperty("--grip-x", `${grips[game.stage][0]}%`);
+  element("scene").style.setProperty("--grip-y", `${grips[game.stage][1]}%`);
+  const height = rowBounds[game.stage + 1] - rowBounds[game.stage];
+  element("scene").style.setProperty("--scene-size", `200% ${100 / height}%`);
+  element("scene").style.setProperty(
+    "--scene-position",
+    `${blink ? 100 : 0}% ${
+      rowBounds[game.stage] /
+      (1 - (rowBounds[game.stage + 1] - rowBounds[game.stage])) * 100
+    }%`,
+  );
+}
 let shownStage = -1;
 function render(): void {
   setText("balance", format(game.balance));
@@ -163,10 +226,7 @@ function render(): void {
     const changed = shownStage >= 0;
     shownStage = game.stage;
     const i = game.stage;
-    element("scene").style.setProperty(
-      "--scene-position",
-      `${i % 4 / 3 * 100}% ${Math.floor(i / 4) * 100}%`,
-    );
+    setSceneFrame(false);
     element("scene").dataset.stage = String(i);
     element("scene").setAttribute(
       "aria-label",
@@ -217,16 +277,20 @@ element("homework").addEventListener("click", () => {
 let last = performance.now();
 let lastRender = last;
 let lastAutomaticStroke = last;
-let nextIdle = last + 3000;
+let nextIdle = last + 1400;
 let idleUntil = 0;
 function frame(now: number): void {
   game.tick((now - last) / 1000);
   if (now >= nextIdle) {
     element("scene").classList.add("idle-blink");
+    setSceneFrame(true);
     idleUntil = now + 190;
-    nextIdle = now + 3500 + Math.random() * 2500;
+    nextIdle = now + 1800 + Math.random() * 1600;
   }
-  if (now >= idleUntil) element("scene").classList.remove("idle-blink");
+  if (now >= idleUntil && element("scene").classList.contains("idle-blink")) {
+    element("scene").classList.remove("idle-blink");
+    setSceneFrame(false);
+  }
   last = now;
   if (
     game.perSecond > 0 && now - lastAutomaticStroke >= 1000 &&

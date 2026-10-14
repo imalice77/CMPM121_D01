@@ -1209,3 +1209,211 @@ a {
   width: 47%;
   height: 53%;
 }
+.player {
+  justify-content: center;
+}
+.scene {
+  flex: 0 1 auto;
+  width: 100%;
+  aspect-ratio: 2/1;
+  min-height: 0;
+  container-type: normal;
+}
+.stage-frame {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 2/1;
+}
+.stage-art {
+  background-size: var(--scene-size,200% 800%);
+}
+.foreground-occluder {
+  background-size: var(--scene-size,200% 800%);
+  clip-path: polygon(34% 5%,66% 5%,66% 72%,100% 72%,100% 100%,0% 100%,0% 72%,34%
+    72%);
+  filter: url(#body-breathe);
+}
+.hand-overlay {
+  background-size: var(--scene-size,200% 800%);
+  clip-path: polygon(39% 67%,50% 67%,50% 91%,39% 91%);
+  transform-origin: 44% 81%;
+}
+.animation-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+.native-companion {
+  position: absolute;
+  inset: 0;
+  background-image: var(--companions-art);
+  background-size: var(--scene-size,200% 800%);
+  background-position: var(--scene-position,0% 0%);
+  image-rendering: pixelated;
+}
+.companion-ai {
+  clip-path: polygon(0% 5%,17% 5%,17% 72%,0% 72%);
+}
+.companion-group {
+  clip-path: polygon(17% 5%,34% 5%,34% 72%,17% 72%);
+}
+.companion-mentor {
+  clip-path: polygon(74% 5%,100% 5%,100% 72%,74% 72%);
+}
+#held-tool {
+  width: 10%;
+  height: 20%;
+  left: 37.5%;
+  bottom: 12%;
+  transform-origin: 65% 65%;
+}
+.computer-mode #held-tool {
+  display: block;
+  left: 73%;
+  bottom: 4%;
+  transform: rotate(15deg);
+  filter: drop-shadow(1px 2px 1px #79512d55);
+}
+.computer-mode.writing #held-tool {
+  animation: none;
+}
+.computer-mode .hand-overlay {
+  clip-path: polygon(61% 72%,71% 72%,71% 90%,61% 90%);
+}
+.prop-timer {
+  left: 10%;
+  bottom: 3%;
+  width: 11%;
+  height: 22%;
+}
+.prop-desk {
+  right: 21%;
+  bottom: 2%;
+  width: 13%;
+  height: 24%;
+}
+.prop-lab {
+  right: 2%;
+  bottom: 2%;
+  width: 21%;
+  height: 38%;
+}
+.prop-network {
+  left: 23%;
+  bottom: 2%;
+  width: 15%;
+  height: 27%;
+}
+@media (prefers-reduced-motion:reduce) {
+  .foreground-occluder {
+    filter: none;
+  }
+}
+.scene:not(.computer-mode) #held-tool {
+  left: calc(var(--grip-x) - 6.5%);
+  bottom: calc(93% - var(--grip-y));
+}
+.scene:not(.computer-mode) .hand-overlay {
+  clip-path: polygon(calc(var(--grip-x) - 6%) calc(var(--grip-y) -
+    8%),calc(var(--grip-x) + 6%) calc(var(--grip-y) - 8%),calc(var(--grip-x) +
+    6%) calc(var(--grip-y) + 8%),calc(var(--grip-x) - 6%) calc(var(--grip-y) +
+    8%));
+  transform-origin: var(--grip-x) var(--grip-y);
+}
+.companion-group {
+  clip-path: polygon(17% 5%,42% 5%,42% 72%,17% 72%);
+}
+.foreground-occluder {
+  clip-path: polygon(43% 14%,60% 14%,65% 30%,67% 45%,67% 62%,66% 72%,100%
+    72%,100% 100%,0% 100%,0% 72%,34% 72%,33% 62%,34% 45%,39% 30%);
+}
+.computer-mode .hand-overlay {
+  clip-path: polygon(calc(var(--type-x) - 6%) calc(var(--type-y) -
+    5%),calc(var(--type-x) + 6%) calc(var(--type-y) - 5%),calc(var(--type-x) +
+    6%) calc(var(--type-y) + 5%),calc(var(--type-x) - 6%) calc(var(--type-y) +
+    5%));
+}
+.foreground-occluder {
+  clip-path: polygon(44% 8%,60% 8%,66% 30%,67% 50%,67% 62%,68% 72%,100% 72%,100%
+    100%,0% 100%,0% 72%,34% 72%,35% 62%,39% 52%,41% 36%,42% 25%);
+}
+.computer-mode #held-tool {
+  left: 62%;
+  bottom: 0%;
+}
+.prop-desk {
+  left: 23%;
+  right: auto;
+  bottom: 3%;
+}
+.prop-network {
+  left: 67%;
+  bottom: 45%;
+  width: 12%;
+  height: 21%;
+}
+.foreground-occluder {
+  filter: none;
+  clip-path: polygon(44% 8%,60% 8%,66% 30%,67% 50%,67% 62%,68% 72%,34% 72%,35%
+    62%,39% 52%,41% 36%,42% 25%);
+  transform-origin: 50% 58%;
+  animation: character-idle 3.6s ease-in-out infinite;
+}
+@keyframes character-idle {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  35% {
+    transform: translateY(1px) rotate(.18deg);
+  }
+  75% {
+    transform: translateY(-.6px) rotate(-.12deg);
+  }
+}
+.desk-occluder {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background-image: var(--scene-art);
+  background-size: var(--scene-size,200% 800%);
+  background-position: var(--scene-position,0% 0%);
+  image-rendering: pixelated;
+  clip-path: polygon(0% 72%,100% 72%,100% 100%,0% 100%);
+}
+#companion-counts {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  pointer-events: none;
+}
+.companion-count {
+  position: absolute;
+  transform: translate(-50%,-100%);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 2px 5px;
+  color: #534331;
+  background: #fff2cc;
+  border: 1px solid #967652;
+  box-shadow: 1px 1px #8e6e48;
+  line-height: 1;
+}
+.count-ai {
+  left: 10%;
+  top: 30%;
+}
+.count-group {
+  left: 26%;
+  top: 10%;
+}
+.count-mentor {
+  left: 85%;
+  top: 8%;
+}
+@media (prefers-reduced-motion:reduce) {
+  .foreground-occluder {
+    animation: none;
+  }
+}
