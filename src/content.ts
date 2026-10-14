@@ -109,8 +109,8 @@ export const stages = [
   { name: "Middle School", at: 100 },
   { name: "High School", at: 500 },
   { name: "College Freshman", at: 2000 },
-  { name: "College Sophomore", at: 5000 },
-  { name: "College Junior", at: 12000 },
-  { name: "College Senior", at: 25000 },
-  { name: "Academic Weapon", at: 50000 },
+  { name: "University Senior", at: 5000 },
+  { name: "PhD Candidate", at: 12000 },
+  { name: "First Job", at: 25000 },
+  { name: "Career Master", at: 50000 },
 ];

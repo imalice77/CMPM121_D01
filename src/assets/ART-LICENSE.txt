@@ -13,3 +13,6 @@ This asset license does not relicense the project's code or other material.
 
 Student layers and desk items atlases
 These transparent PNG atlases were generated as adaptations of the original study pixel atlas, retaining the OpenMoji-inspired style. They add six student appearances, an isolated writing arm/notebook, an empty room, and separately placeable supplies. The same CC BY-SA 4.0 attribution and license above apply to these adapted assets.
+
+Girl life scenes and perspective props
+Additional imagegen adaptations preserve one brown-haired female protagonist across eight stages: Chinese primary/middle/high-school uniforms, university hoodies with progressively longer loose hair, tired PhD appearance with glasses, and white-collar career appearances with glasses and a long tied-back hairstyle. Environments progress from bedroom to dorm/research room and office. Writing hands are drawn proportionally within each scene; the game adds the equipped pen as an independent animated layer. Props have unified desk perspective and shadows. These adaptations retain the CC BY-SA 4.0 license and attribution above.
