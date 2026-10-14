@@ -10,3 +10,6 @@ Adaptation: OpenAI imagegen, at the user's request. Converted the child and cloc
 The adapted atlas is distributed under Creative Commons Attribution-ShareAlike 4.0.
 License: https://creativecommons.org/licenses/by-sa/4.0/
 This asset license does not relicense the project's code or other material.
+
+Student layers and desk items atlases
+These transparent PNG atlases were generated as adaptations of the original study pixel atlas, retaining the OpenMoji-inspired style. They add six student appearances, an isolated writing arm/notebook, an empty room, and separately placeable supplies. The same CC BY-SA 4.0 attribution and license above apply to these adapted assets.
