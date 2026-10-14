@@ -1,4 +1,5 @@
-import { Game, stages, upgrades } from "./game.ts";
+import { Game } from "./game.ts";
+import { stages, upgrades } from "./content.ts";
 const game = new Game();
 const app = document.querySelector<HTMLElement>("#app")!;
 const format = (n: number) =>
