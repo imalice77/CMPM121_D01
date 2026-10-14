@@ -274,6 +274,21 @@ element("homework").addEventListener("click", () => {
   writeAnimation(performance.now(), true);
   render();
 });
+
+document.addEventListener("keydown", (e) => {
+  if (e.code === "Space" || e.code === "Enter") {
+    if (
+      e.target instanceof Element &&
+      e.target.closest(
+        "button, a, input, textarea, select, summary, [contenteditable]",
+      )
+    ) return;
+    e.preventDefault();
+    if (e.repeat) return;
+    element("homework").click();
+  }
+});
+
 let last = performance.now();
 let lastRender = last;
 let lastAutomaticStroke = last;
