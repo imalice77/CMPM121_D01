@@ -16,3 +16,6 @@ These transparent PNG atlases were generated as adaptations of the original stud
 
 Girl life scenes and perspective props
 Additional imagegen adaptations preserve one brown-haired female protagonist across eight stages: Chinese primary/middle/high-school uniforms, university hoodies with progressively longer loose hair, tired PhD appearance with glasses, and white-collar career appearances with glasses and a long tied-back hairstyle. Environments progress from bedroom to dorm/research room and office. Writing hands are drawn proportionally within each scene; the game adds the equipped pen as an independent animated layer. Props have unified desk perspective and shadows. These adaptations retain the CC BY-SA 4.0 license and attribution above.
+
+Typing and idle-face atlases
+The typing atlas replaces each notebook activity with a central laptop and matching hands, preserving the protagonist and stage backgrounds. The idle-face atlas supplies eyes-closed relaxed expressions for time-based face animation. Both were created with imagegen as adaptations of the life-stage atlas and retain the CC BY-SA 4.0 attribution and license above.

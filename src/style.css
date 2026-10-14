@@ -1105,3 +1105,107 @@ a {
   background-image: linear-gradient(to bottom,#e7cfaa 0%,#e7cfaa 80%,#b77d47
     80%,#a46b38 100%);
 }
+.stage-art {
+  z-index: 0;
+}
+#companions {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.foreground-occluder {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background-image: var(--scene-art);
+  background-size: 400% 200%;
+  background-position: var(--scene-position,0% 0%);
+  image-rendering: pixelated;
+  clip-path: polygon(22% 17%,78% 17%,78% 80%,100% 80%,100% 100%,0% 100%,0%
+    80%,22% 80%);
+}
+#equipment {
+  z-index: 3;
+}
+#companions .prop-mentor {
+  right: -7%;
+  bottom: 17%;
+  width: 43%;
+  height: 68%;
+  top: auto;
+}
+#companions .prop-group {
+  left: -5%;
+  bottom: 17%;
+  width: 48%;
+  height: 66%;
+  top: auto;
+}
+#companions .prop-ai {
+  left: -6%;
+  bottom: 17%;
+  width: 41%;
+  height: 61%;
+  top: auto;
+}
+#companions .prop-sprite {
+  filter: brightness(.93) drop-shadow(2px 3px 1px #79512d55);
+}
+#companions .quantity {
+  display: none;
+}
+#held-tool {
+  width: 20%;
+  height: 20%;
+  left: 23.4%;
+  bottom: 11.9%;
+  transform-origin: 65% 65%;
+}
+.computer-mode #held-tool {
+  display: none;
+}
+.computer-mode .hand-overlay {
+  clip-path: polygon(23% 73%,77% 73%,77% 86%,23% 86%);
+  transform-origin: 50% 80%;
+}
+.computer-mode.writing .hand-overlay {
+  animation: keyboard .18s steps(2) 3;
+}
+@keyframes keyboard {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(2px);
+  }
+}
+.idle-face {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  background-size: 400% 200%;
+  background-position: var(--scene-position,0% 0%);
+  image-rendering: pixelated;
+  clip-path: ellipse(15% 12% at 50% 50%);
+  opacity: 0;
+  pointer-events: none;
+}
+.idle-blink .idle-face {
+  opacity: 1;
+}
+@media (prefers-reduced-motion:reduce) {
+  .computer-mode.writing .hand-overlay {
+    animation: none;
+  }
+}
+.computer-mode .hand-overlay {
+  clip-path: polygon(62% 75%,78% 75%,78% 86%,62% 86%);
+}
+#companions .prop-group {
+  left: -3%;
+  bottom: 29%;
+  width: 47%;
+  height: 53%;
+}

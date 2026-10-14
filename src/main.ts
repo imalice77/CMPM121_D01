@@ -5,6 +5,9 @@ const app = document.querySelector<HTMLElement>("#app")!;
 const items = new URL("./assets/desk-items.png", import.meta.url).href;
 const scenes = new URL("./assets/girl-life-scenes.png", import.meta.url).href;
 const props = new URL("./assets/perspective-props.png", import.meta.url).href;
+const typingScenes =
+  new URL("./assets/girl-typing-scenes.png", import.meta.url).href;
+const idleFaces = new URL("./assets/girl-idle-faces.png", import.meta.url).href;
 const format = (n: number) =>
   n.toLocaleString("en-US", { maximumFractionDigits: 1 });
 const icons: Record<string, number> = {
@@ -29,7 +32,7 @@ function item(id: string, extra = ""): string {
   }% ${Math.floor(i / 4) / 2 * 100}%"></span>`;
 }
 app.innerHTML =
-  `<div class="notebook"><header><h1>ASSIGNMENT GRIND</h1><span class="page-number">01 / ∞</span></header><div class="game-layout"><section class="player"><div class="wallet"><span class="coin" aria-hidden="true">✦</span><div><small>CREDITS</small><strong id="balance"></strong></div><span id="rate" title="Automatic homework per second"></span></div><div id="scene" class="scene" style="--scene-art:url('${scenes}')" role="img" aria-label="Brown-haired ponytail girl writing homework"><div id="stage-frame" class="stage-frame" style="--scene-art:url('${scenes}')"><div class="stage-art"></div><div id="equipment"></div><div id="writing-hand" class="hand-overlay"></div><div id="held-tool"></div><span id="spark" aria-hidden="true"></span></div><div id="level-banner" class="level-banner" role="status"></div></div><button id="homework" class="write-button" aria-label="Do homework"><span>✎ WRITE!</span><span id="click-effect"></span></button><div class="journey"><div><span id="stage"></span><strong id="percent"></strong></div><progress id="progress" max="1" aria-label="Education stage progress"></progress></div><p id="notice" class="sr-only" role="status" aria-live="polite"></p></section><section class="shops" aria-label="Upgrade shops"><div class="house pen-house"><div class="roof"><span>✎</span></div><div class="facade"><div id="tools" class="tools" aria-label="Writing tools"></div><div class="house-base"><i></i><span>✎</span><i></i></div></div></div><div class="house study-house"><div class="flat-roof"><span>▤</span><i></i><i></i></div><div class="facade"><div id="resources" class="resources" aria-label="Learning resources"></div><div class="house-base"><i></i><span>▣</span><i></i></div></div></div></section></div><footer><span>SPACE / ENTER</span><details><summary>ⓘ</summary><div>Progress lasts for this session. Hover or focus a shop item for details.<p>Pixel art adapted with OpenAI imagegen from OpenMoji references. <a href="https://openmoji.org/">OpenMoji contributors</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p></div></details></footer></div>`;
+  `<div class="notebook"><header><h1>ASSIGNMENT GRIND</h1><span class="page-number">01 / ∞</span></header><div class="game-layout"><section class="player"><div class="wallet"><span class="coin" aria-hidden="true">✦</span><div><small>CREDITS</small><strong id="balance"></strong></div><span id="rate" title="Automatic homework per second"></span></div><div id="scene" class="scene" style="--scene-art:url('${scenes}')" role="img" aria-label="Brown-haired ponytail girl writing homework"><div id="stage-frame" class="stage-frame" style="--scene-art:url('${scenes}')"><div class="stage-art"></div><div id="companions"></div><div class="foreground-occluder"></div><div id="equipment"></div><div id="writing-hand" class="hand-overlay"></div><div id="held-tool"></div><div class="idle-face" style="background-image:url('${idleFaces}')"></div><span id="spark" aria-hidden="true"></span></div><div id="level-banner" class="level-banner" role="status"></div></div><button id="homework" class="write-button" aria-label="Do homework"><span id="action-label">✎ WRITE!</span><span id="click-effect"></span></button><div class="journey"><div><span id="stage"></span><strong id="percent"></strong></div><progress id="progress" max="1" aria-label="Education stage progress"></progress></div><p id="notice" class="sr-only" role="status" aria-live="polite"></p></section><section class="shops" aria-label="Upgrade shops"><div class="house pen-house"><div class="roof"><span>✎</span></div><div class="facade"><div id="tools" class="tools" aria-label="Writing tools"></div><div class="house-base"><i></i><span>✎</span><i></i></div></div></div><div class="house study-house"><div class="flat-roof"><span>▤</span><i></i><i></i></div><div class="facade"><div id="resources" class="resources" aria-label="Learning resources"></div><div class="house-base"><i></i><span>▣</span><i></i></div></div></div></section></div><footer><span>SPACE / ENTER</span><details><summary>ⓘ</summary><div>Progress lasts for this session. Hover or focus a shop item for details.<p>Pixel art adapted with OpenAI imagegen from OpenMoji references. <a href="https://openmoji.org/">OpenMoji contributors</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p></div></details></footer></div>`;
 const element = (id: string) => document.getElementById(id)!;
 function setText(id: string, value: string): void {
   const el = element(id);
@@ -55,6 +58,12 @@ for (const u of upgrades) {
   });
 }
 function decorateRoom(): void {
+  const computer = Boolean(game.owned.search);
+  element("scene").classList.toggle("computer-mode", computer);
+  const art = `url('${computer ? typingScenes : scenes}')`;
+  element("scene").style.setProperty("--scene-art", art);
+  element("stage-frame").style.setProperty("--scene-art", art);
+  setText("action-label", computer ? "⌨ TYPE!" : "✎ WRITE!");
   const current =
     upgrades.filter((u) => u.kind === "tool" && game.owned[u.id]).sort((a, b) =>
       b.effect - a.effect
@@ -62,17 +71,23 @@ function decorateRoom(): void {
   element("held-tool").innerHTML = item(current?.id ?? "pencil", "held-pen");
   element("held-tool").dataset.pen = current?.id ?? "pencil";
   element("held-tool").setAttribute("aria-label", current?.name ?? "Pencil");
-  element("equipment").innerHTML = upgrades.filter((u) =>
+  const companions = new Set(["group", "mentor", "ai"]);
+  const owned = upgrades.filter((u) =>
     u.kind === "resource" && game.owned[u.id]
-  ).map((u) =>
+  );
+  const markup = (u: (typeof upgrades)[number]) =>
     `<div class="prop prop-${u.id}" title="${u.name}: ${
       game.owned[u.id]
     }" role="img" aria-label="${u.name}, ${game.owned[u.id]} owned">${
       propSprite(u.id)
     }<span class="quantity">${
       game.owned[u.id] > 1 ? `×${game.owned[u.id]}` : ""
-    }</span></div>`
-  ).join("");
+    }</span></div>`;
+  element("companions").innerHTML = owned.filter((u) => companions.has(u.id))
+    .map(markup).join("");
+  element("equipment").innerHTML = owned.filter((u) =>
+    !companions.has(u.id) && u.id !== "search"
+  ).map(markup).join("");
 }
 const propIndices: Record<string, number> = {
   timer: 0,
@@ -202,8 +217,16 @@ element("homework").addEventListener("click", () => {
 let last = performance.now();
 let lastRender = last;
 let lastAutomaticStroke = last;
+let nextIdle = last + 3000;
+let idleUntil = 0;
 function frame(now: number): void {
   game.tick((now - last) / 1000);
+  if (now >= nextIdle) {
+    element("scene").classList.add("idle-blink");
+    idleUntil = now + 190;
+    nextIdle = now + 3500 + Math.random() * 2500;
+  }
+  if (now >= idleUntil) element("scene").classList.remove("idle-blink");
   last = now;
   if (
     game.perSecond > 0 && now - lastAutomaticStroke >= 1000 &&
