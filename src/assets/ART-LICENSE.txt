@@ -1,0 +1,12 @@
+Study pixel atlas
+
+Source references: OpenMoji boy (1F466) and alarm clock (23F0).
+https://openmoji.org/library/emoji-1F466/
+https://openmoji.org/library/emoji-23F0/
+https://github.com/hfg-gmuend/openmoji
+
+Original graphics: OpenMoji contributors (alarm clock: Rana Cakir).
+Adaptation: OpenAI imagegen, at the user's request. Converted the child and clock references into pixel art and added a homework desk scene and related game item icons. This does not imply endorsement by OpenMoji.
+The adapted atlas is distributed under Creative Commons Attribution-ShareAlike 4.0.
+License: https://creativecommons.org/licenses/by-sa/4.0/
+This asset license does not relicense the project's code or other material.
