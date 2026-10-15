@@ -1311,8 +1311,24 @@ a {
   }
 }
 .scene:not(.computer-mode) #held-tool {
-  left: calc(var(--grip-x) - 6.5%);
-  bottom: calc(93% - var(--grip-y));
+  /* Anchor the sprite's center to the fingers, including during rotation. */
+  left: var(--grip-x);
+  top: var(--grip-y);
+  bottom: auto;
+  translate: -50% -50%;
+  transform-origin: 50% 50%;
+}
+.scene:not(.computer-mode).writing #held-tool {
+  animation-name: held-pen-writing;
+}
+@keyframes held-pen-writing {
+  0%,
+  100% {
+    transform: rotate(-80deg);
+  }
+  50% {
+    transform: translate(2px,1px) rotate(-78deg);
+  }
 }
 .scene:not(.computer-mode) .hand-overlay {
   clip-path: polygon(calc(var(--grip-x) - 6%) calc(var(--grip-y) -
